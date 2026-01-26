@@ -33,7 +33,8 @@ class CommandBuilder:
         :returns: Self for method chaining
         :raises ValueError: If the command list has fewer than two elements
         """
-        if len(command) < 2: raise ValueError(
+        if len(command) < 2:
+            raise ValueError(
             'Command construct parameter must have at least two str arguments - execution call and any arguments')
         self._command.execution_call = command[0]
         self._command.command_to_execute = command[1]

@@ -68,7 +68,8 @@ class Command:
         :raises FileNotFoundError: If the path does not exist
         """
         paths = glob.glob(str(path), recursive=True)
-        if not paths: raise FileNotFoundError(f"Could not recognize given path - '{path}' - does not exist")
+        if not paths:
+            raise FileNotFoundError(f"Could not recognize given path - '{path}' - does not exist")
 
     def __copy__(self) -> Self:
         """
