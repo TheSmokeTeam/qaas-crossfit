@@ -61,13 +61,13 @@ class Tool(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def snapshot_coverage(self, session: str, target_dir: Path, target_file: Optional[str],
+    def snapshot_coverage(self, session: str, target_dir: Path, target_file: Optional[Path],
                           *extras: Tuple[str, Optional[str]]) -> Command:
         """Builds a command to snapshot coverage data."""
         raise NotImplementedError
 
     @abstractmethod
-    def merge_coverage(self, coverage_files: List[Path], target_dir: Path, target_file: Optional[str],
+    def merge_coverage(self, coverage_files: List[Path], target_dir: Path, target_file: Optional[Path],
                        *extras: Tuple[str, Optional[str]]) -> Command:
         """Builds a command to merge coverage files."""
         raise NotImplementedError

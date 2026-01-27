@@ -129,7 +129,7 @@ class TestCreateCommandBuilder:
         invalid_paths = [Path("/nonexistent/path/file.exec")]
         builder = tool._create_command_builder("report", path_arguments=invalid_paths)
         command = builder.build_command()
-        # Should fallback to --help command
+        # Should fall back to --help command
         assert "--help" in str(command)
 
     def test_create_command_builder_with_invalid_path_catch_false(self, tool_no_catch):
