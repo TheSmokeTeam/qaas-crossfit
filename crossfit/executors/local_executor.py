@@ -19,8 +19,8 @@ class LocalExecutor(Executor):
         super().__init__(logger, catch)
         self._exec_kwargs = {
             "capture_output": True,
+            "check": True,
             "text": True,
-            "shell": True,
         }
         self._exec_kwargs.update(execution_kwargs)
 
