@@ -25,11 +25,9 @@ class Executor(ABC):
         """
         result = self._execute_single(command)
 
-        # Handle chained commands via next_command
         current = command.next_command
         while current is not None:
             if result.code != 0:
-                # Stop execution on failure
                 self._logger.warning(f"Stopping command chain due to failure. Code: {result.code}")
                 break
             next_result = self._execute_single(current)

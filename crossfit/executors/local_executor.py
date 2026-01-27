@@ -46,7 +46,6 @@ class LocalExecutor(Executor):
                 command=command_str,
                 output=res.stdout,
                 error=res.stderr,
-                target=""
             )
 
         except subprocess.CalledProcessError as cpe:
@@ -60,7 +59,6 @@ class LocalExecutor(Executor):
                 command=command_str,
                 output=cpe.stdout or "",
                 error=cpe.stderr or "",
-                target=""
             )
 
         except FileNotFoundError as not_found_e:
@@ -68,11 +66,10 @@ class LocalExecutor(Executor):
             if not self._catch:
                 raise
             return CommandResult(
-                code=127,
+                code=124,
                 command=command_str,
                 output="",
                 error=not_found_e.strerror,
-                target=""
             )
 
         except AttributeError as attr_e:
@@ -84,7 +81,6 @@ class LocalExecutor(Executor):
                 command=command_str,
                 output="",
                 error=str(attr_e),
-                target=""
             )
 
         except Exception as e:
@@ -96,5 +92,4 @@ class LocalExecutor(Executor):
                 command=command_str,
                 output="",
                 error=str(e),
-                target=""
             )
