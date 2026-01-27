@@ -1,6 +1,6 @@
 import subprocess
 from logging import Logger
-
+import shlex
 from crossfit.commands.command import Command
 from crossfit.executors.executor import Executor
 from crossfit.models.command_models import CommandResult
@@ -33,7 +33,7 @@ class LocalExecutor(Executor):
         command_str = str(command)
         try:
             command.validate()
-            res = subprocess.run(command_str, **self._exec_kwargs)
+            res = subprocess.run(shlex.split(command_str), **self._exec_kwargs)
 
             if res.returncode != 0 or (res.stderr and len(res.stderr)):
                 raise subprocess.CalledProcessError(
