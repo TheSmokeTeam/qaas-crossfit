@@ -67,9 +67,9 @@ class DotnetCoverage(Tool):
             self._create_command_builder("", ToolType.DotnetReportGenerator, None, *extras)
             .set_values_delimiter(":", True)
             .add_option("-reports", f"\"{multiple_values_delimiter.join(map(str, coverage_files))}\""))
-        report_formats = set((report_formats or []) + [report_format])
+        combined_formats = set((report_formats or []) + [report_format])
         command_builder = command_builder.add_option(
-            "-reporttypes",f"\"{multiple_values_delimiter.join([rf.value for rf in report_formats if rf])}\"")
+            "-reporttypes",f"\"{multiple_values_delimiter.join([rf.value for rf in combined_formats if rf])}\"")
 
         command = command_builder.build_command()
         command.command = [kw.replace("--", "-") for kw in command.command[2:]]

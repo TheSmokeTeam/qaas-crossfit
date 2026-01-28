@@ -58,8 +58,8 @@ class Jacoco(Tool):
             extras += ("--classfiles", str(build_dir)),
         command = self._create_command_builder(
             "report", None, coverage_files, ["--classfiles"], *extras)
-        report_formats = set((report_formats or []) + [report_format])
-        for rf in report_formats:
+        combined_formats = set((report_formats or []) + [report_format])
+        for rf in combined_formats:
             if rf == ReportFormat.Html:
                 command = command.add_option(f"--{rf.name.lower()}", str(target_dir))
             elif rf is not None:
