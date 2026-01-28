@@ -5,7 +5,7 @@ from typing import List, Optional, Tuple
 
 import pytest
 
-import tests
+import testing
 from crossfit.commands.command import Command
 from crossfit.commands.command_builder import CommandBuilder
 from crossfit.models.tool_models import ToolType
@@ -36,19 +36,19 @@ class ConcreteTool(Tool):
 @pytest.fixture
 def tool():
     """Fixture for a tool with catch=True (default)."""
-    return ConcreteTool(logger=tests.logger, path=Path("./tools"), catch=True)
+    return ConcreteTool(logger=testing.logger, path=Path("./tools"), catch=True)
 
 
 @pytest.fixture
 def tool_no_catch():
     """Fixture for a tool with catch=False."""
-    return ConcreteTool(logger=tests.logger, path=Path("./tools"), catch=False)
+    return ConcreteTool(logger=testing.logger, path=Path("./tools"), catch=False)
 
 
 @pytest.fixture
 def tool_no_path():
     """Fixture for a tool without a custom path."""
-    return ConcreteTool(logger=tests.logger, path=None, catch=True)
+    return ConcreteTool(logger=testing.logger, path=None, catch=True)
 
 
 class TestToolInit:
@@ -56,21 +56,21 @@ class TestToolInit:
 
     def test_tool_init_with_all_params(self):
         """Test Tool initialization with all parameters."""
-        tool = ConcreteTool(logger=tests.logger, path=Path("/custom/path"), catch=False)
-        assert tool._logger == tests.logger
+        tool = ConcreteTool(logger=testing.logger, path=Path("/custom/path"), catch=False)
+        assert tool._logger == testing.logger
         assert tool._path == Path("/custom/path")
         assert tool._catch is False
 
     def test_tool_init_with_defaults(self):
         """Test Tool initialization with default values."""
-        tool = ConcreteTool(logger=tests.logger)
-        assert tool._logger == tests.logger
+        tool = ConcreteTool(logger=testing.logger)
+        assert tool._logger == testing.logger
         assert tool._path is None
         assert tool._catch is True
 
     def test_tool_type_is_set(self):
         """Test that tool type is correctly set on the concrete tool."""
-        tool = ConcreteTool(logger=tests.logger)
+        tool = ConcreteTool(logger=testing.logger)
         assert tool._tool_type == ToolType.Jacoco
 
 

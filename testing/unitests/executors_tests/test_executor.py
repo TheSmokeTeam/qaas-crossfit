@@ -1,7 +1,7 @@
 # test_executor.py
 import pytest
 
-import tests
+import testing
 from crossfit.commands.command import Command
 from crossfit.executors.executor import Executor
 from crossfit.models.command_models import CommandResult
@@ -79,13 +79,13 @@ class TestExecutorInit:
 
     def test_executor_init_with_defaults(self):
         """Test Executor initialization with default catch=True."""
-        executor = ConcreteExecutor(logger=tests.logger)
-        assert executor._logger == tests.logger
+        executor = ConcreteExecutor(logger=testing.logger)
+        assert executor._logger == testing.logger
         assert executor._catch is True
 
     def test_executor_init_with_catch_false(self):
         """Test Executor initialization with catch=False."""
-        executor = ConcreteExecutor(logger=tests.logger, catch=False)
+        executor = ConcreteExecutor(logger=testing.logger, catch=False)
         assert executor._catch is False
 
 
@@ -94,7 +94,7 @@ class TestExecuteSingle:
 
     def test_execute_single_command_success(self, simple_command, success_result):
         """Test executing a single command successfully."""
-        executor = ConcreteExecutor(logger=tests.logger, results=[success_result])
+        executor = ConcreteExecutor(logger=testing.logger, results=[success_result])
         result = executor.execute(simple_command)
 
         assert result.code == 0
@@ -103,7 +103,7 @@ class TestExecuteSingle:
 
     def test_execute_single_command_failure(self, simple_command, failure_result):
         """Test executing a single command that fails."""
-        executor = ConcreteExecutor(logger=tests.logger, results=[failure_result])
+        executor = ConcreteExecutor(logger=testing.logger, results=[failure_result])
         result = executor.execute(simple_command)
 
         assert result.code == 1
@@ -122,7 +122,7 @@ class TestExecuteChain:
             CommandResult(code=0, command="cmd2", output="out2", error=""),
             CommandResult(code=0, command="cmd3", output="out3", error=""),
         ]
-        executor = ConcreteExecutor(logger=tests.logger, results=results)
+        executor = ConcreteExecutor(logger=testing.logger, results=results)
         result = executor.execute(cmd1)
 
         # All 3 commands should be executed
@@ -139,7 +139,7 @@ class TestExecuteChain:
             CommandResult(code=0, command="cmd2", output="out2", error=""),
             CommandResult(code=0, command="cmd3", output="out3", error=""),  # Should not be reached
         ]
-        executor = ConcreteExecutor(logger=tests.logger, results=results)
+        executor = ConcreteExecutor(logger=testing.logger, results=results)
         result = executor.execute(cmd1)
 
         # Only first command should be executed because it failed
@@ -152,7 +152,7 @@ class TestExecuteChain:
         results = [
             CommandResult(code=127, command="cmd1", output="", error="cmd1 not found"),
         ]
-        executor = ConcreteExecutor(logger=tests.logger, results=results)
+        executor = ConcreteExecutor(logger=testing.logger, results=results)
         result = executor.execute(cmd1)
 
         # Only first command should be executed
@@ -167,7 +167,7 @@ class TestExecuteChain:
             CommandResult(code=0, command="cmd2 arg2", output="out2", error=""),
             CommandResult(code=0, command="cmd3 arg3", output="out3", error=""),
         ]
-        executor = ConcreteExecutor(logger=tests.logger, results=results)
+        executor = ConcreteExecutor(logger=testing.logger, results=results)
         result = executor.execute(cmd1)
 
         # Check aggregated command string
@@ -185,7 +185,7 @@ class TestExecuteEdgeCases:
 
     def test_execute_command_without_next_command(self, simple_command, success_result):
         """Test executing a command that has no next_command."""
-        executor = ConcreteExecutor(logger=tests.logger, results=[success_result])
+        executor = ConcreteExecutor(logger=testing.logger, results=[success_result])
         result = executor.execute(simple_command)
 
         assert len(executor._executed_commands) == 1
@@ -207,7 +207,7 @@ class TestExecuteEdgeCases:
             CommandResult(code=0, command="first cmd", output="first", error=""),
             CommandResult(code=0, command="second cmd", output="second", error=""),
         ]
-        executor = ConcreteExecutor(logger=tests.logger, results=results)
+        executor = ConcreteExecutor(logger=testing.logger, results=results)
         result = executor.execute(cmd1)
 
         assert len(executor._executed_commands) == 2
@@ -226,7 +226,7 @@ class TestExecuteEdgeCases:
         results = [
             CommandResult(code=255, command="cmd1", output="", error="custom error"),
         ]
-        executor = ConcreteExecutor(logger=tests.logger, results=results)
+        executor = ConcreteExecutor(logger=testing.logger, results=results)
         result = executor.execute(cmd1)
 
         assert len(executor._executed_commands) == 1

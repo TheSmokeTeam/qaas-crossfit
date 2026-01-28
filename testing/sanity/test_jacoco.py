@@ -7,7 +7,7 @@ import crossfit
 from crossfit import Jacoco, Command
 from crossfit.executors import LocalExecutor
 from crossfit.models import CommandResult, ReportFormat
-from tests import logger, tests_dir_path
+from testing import logger, tests_dir_path
 
 
 @pytest.fixture
@@ -20,23 +20,23 @@ def local_executor():
 
 @pytest.fixture
 def coverage_files():
-    return [Path(str(os.path.relpath(tests_dir_path / r"tests_helpers/tools/jacoco/f1.exec"))),
-            Path(str(os.path.relpath(tests_dir_path / r"tests_helpers/tools/jacoco/f2.exec")))]
+    return [Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/f1.exec"))),
+            Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/f2.exec")))]
 
 
 @pytest.fixture
 def target_dir():
-    return Path(str(os.path.relpath(tests_dir_path / r"tests_helpers/tools/jacoco/output/")))
+    return Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/output/")))
 
 
 @pytest.fixture
 def sourcecode_dir():
-    return Path(str(os.path.relpath(tests_dir_path / r"tests_helpers/tools/jacoco/sourcecode/")))
+    return Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/sourcecode/")))
 
 
 @pytest.fixture
 def classfiles_dir():
-    return Path(str(os.path.relpath(tests_dir_path / r"tests_helpers/tools/jacoco/classfiles/")))
+    return Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/classfiles/")))
 
 
 @pytest.mark.parametrize("report_format, report_formats, expected_return_code", [
@@ -71,7 +71,7 @@ def test_jacoco_execute_report(jacoco_tool, local_executor, coverage_files, targ
 
 def test_jacoco_execute_report_files_wildcard(jacoco_tool, local_executor, target_dir, sourcecode_dir, classfiles_dir):
     report_format = ReportFormat.Csv
-    coverage_files = [Path(tests_dir_path / r"tests_helpers/tools/jacoco/*.exec")]
+    coverage_files = [Path(tests_dir_path / r"helpers/tools/jacoco/*.exec")]
     report_formats = [ReportFormat.Html, ReportFormat.Xml]
     extras = [("--quiet", None), ("--tabwith", "6")]
 

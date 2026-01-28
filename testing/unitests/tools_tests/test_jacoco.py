@@ -5,7 +5,7 @@ import crossfit
 from crossfit import Jacoco, Command
 from crossfit.executors.local_executor import LocalExecutor
 from crossfit.models import CommandResult, ReportFormat
-from tests import logger, tests_dir_path
+from testing import logger, tests_dir_path
 
 
 @pytest.fixture
@@ -21,24 +21,24 @@ def local_executor():
 @pytest.fixture
 def coverage_files():
     return [
-        Path(tests_dir_path / r"tests_helpers/tools/jacoco/f1.exec"),
-        Path(tests_dir_path / r"tests_helpers/tools/jacoco/f2.exec"),
+        Path(tests_dir_path / r"helpers/tools/jacoco/f1.exec"),
+        Path(tests_dir_path / r"helpers/tools/jacoco/f2.exec"),
     ]
 
 
 @pytest.fixture
 def target_dir():
-    return Path(tests_dir_path / r"tests_helpers/tools/jacoco/output/")
+    return Path(tests_dir_path / r"helpers/tools/jacoco/output/")
 
 
 @pytest.fixture
 def sourcecode_dir():
-    return Path(tests_dir_path / r"tests_helpers/tools/jacoco/sourcecode/")
+    return Path(tests_dir_path / r"helpers/tools/jacoco/sourcecode/")
 
 
 @pytest.fixture
 def classfiles_dir():
-    return Path(tests_dir_path / r"tests_helpers/tools/jacoco/classfiles/")
+    return Path(tests_dir_path / r"helpers/tools/jacoco/classfiles/")
 
 
 def _mock_execute_success(monkeypatch, local_executor, command: Command) -> CommandResult:

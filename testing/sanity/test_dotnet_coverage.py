@@ -3,7 +3,7 @@ from pathlib import Path
 from crossfit import DotnetCoverage, Command
 from crossfit.executors import LocalExecutor
 from crossfit.models import CommandResult, ReportFormat
-from tests import logger, tests_dir_path
+from testing import logger, tests_dir_path
 
 
 @pytest.fixture
@@ -18,18 +18,18 @@ def local_executor():
 
 @pytest.fixture
 def coverage_files():
-    return [Path(tests_dir_path / r"tests_helpers/tools/dotnetcoverage/s1.cobertura.xml"),
-            Path(tests_dir_path / r"tests_helpers/tools/dotnetcoverage/s2.cobertura.xml")]
+    return [Path(tests_dir_path / r"helpers/tools/dotnetcoverage/s1.cobertura.xml"),
+            Path(tests_dir_path / r"helpers/tools/dotnetcoverage/s2.cobertura.xml")]
 
 
 @pytest.fixture
 def target_dir():
-    return Path(tests_dir_path / r"tests_helpers/tools/dotnetcoverage/output/")
+    return Path(tests_dir_path / r"helpers/tools/dotnetcoverage/output/")
 
 
 @pytest.fixture
 def sourcecode_dir():
-    return Path(tests_dir_path / r"tests_helpers/tools/dotnetcoverage/sourcecode/")
+    return Path(tests_dir_path / r"helpers/tools/dotnetcoverage/sourcecode/")
 
 
 @pytest.mark.parametrize("report_format, report_formats, expected_return_code", [

@@ -6,7 +6,7 @@ from typeguard import TypeCheckError
 
 from crossfit import Command
 from crossfit.commands.command_builder import CommandBuilder
-from tests import tests_dir_path
+from testing import tests_dir_path
 
 
 class TestCommandBuilder:
@@ -144,9 +144,9 @@ class TestCommandBuilder:
     # region add_path_arguments Tests
     def test_add_path_arguments(self):
         """Test adding path arguments."""
-        expected_command = ["python", "run.py", os.path.relpath(tests_dir_path / r"tests_helpers/command/f1.txt"),
-                            os.path.relpath(tests_dir_path / r"tests_helpers/command/")]
-        paths = [tests_dir_path / r"tests_helpers/command/f1.txt", tests_dir_path / r"tests_helpers/command/"]
+        expected_command = ["python", "run.py", os.path.relpath(tests_dir_path / r"helpers/command/f1.txt"),
+                            os.path.relpath(tests_dir_path / r"helpers/command/")]
+        paths = [tests_dir_path / r"helpers/command/f1.txt", tests_dir_path / r"helpers/command/"]
         command_builder = CommandBuilder().with_command(["python", "run.py"]).add_path_arguments(*paths)
         command = command_builder.build_command()
         assert command.command == expected_command
@@ -154,10 +154,10 @@ class TestCommandBuilder:
     def test_add_path_arguments_with_absolute_paths(self):
         """Test adding absolute path arguments."""
         command_builder = CommandBuilder().with_command(["python", "run.py"]).add_path_arguments(
-            tests_dir_path / "tests_helpers/command/", tests_dir_path / "tests_helpers/command/f1.txt")
+            tests_dir_path / "helpers/command/", tests_dir_path / "helpers/command/f1.txt")
         command = command_builder.build_command()
-        assert command.command == ["python", "run.py", os.path.relpath(tests_dir_path / "tests_helpers/command/"),
-                                   os.path.relpath(tests_dir_path / "tests_helpers/command/f1.txt")]
+        assert command.command == ["python", "run.py", os.path.relpath(tests_dir_path / "helpers/command/"),
+                                   os.path.relpath(tests_dir_path / "helpers/command/f1.txt")]
 
     def test_add_invalid_path_arguments(self):
         """Test that invalid path raises FileNotFoundError."""

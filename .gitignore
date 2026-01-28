@@ -173,7 +173,7 @@ celerybeat.pid
 ############################
 # Project specific
 ############################
-tests/**/output/
+testing/**/output/
 
 ############################
 # Environment files

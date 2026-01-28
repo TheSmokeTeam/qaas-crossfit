@@ -3,7 +3,7 @@ import subprocess
 
 import pytest
 
-import tests
+import testing
 from crossfit.commands.command import Command
 from crossfit.executors.local_executor import LocalExecutor
 from crossfit.models.command_models import CommandResult
@@ -12,13 +12,13 @@ from crossfit.models.command_models import CommandResult
 @pytest.fixture
 def executor():
     """Fixture for LocalExecutor with catch=True (default)."""
-    return LocalExecutor(logger=tests.logger, catch=True)
+    return LocalExecutor(logger=testing.logger, catch=True)
 
 
 @pytest.fixture
 def executor_no_catch():
     """Fixture for LocalExecutor with catch=False."""
-    return LocalExecutor(logger=tests.logger, catch=False)
+    return LocalExecutor(logger=testing.logger, catch=False)
 
 
 @pytest.fixture
@@ -52,8 +52,8 @@ class TestLocalExecutorInit:
 
     def test_init_with_defaults(self):
         """Test LocalExecutor initialization with default values."""
-        executor = LocalExecutor(logger=tests.logger)
-        assert executor._logger == tests.logger
+        executor = LocalExecutor(logger=testing.logger)
+        assert executor._logger == testing.logger
         assert executor._catch is True
         assert executor._exec_kwargs["capture_output"] is True
         assert executor._exec_kwargs["check"] is True
@@ -61,18 +61,18 @@ class TestLocalExecutorInit:
 
     def test_init_with_catch_false(self):
         """Test LocalExecutor initialization with catch=False."""
-        executor = LocalExecutor(logger=tests.logger, catch=False)
+        executor = LocalExecutor(logger=testing.logger, catch=False)
         assert executor._catch is False
 
     def test_init_with_custom_kwargs(self):
         """Test LocalExecutor initialization with custom execution kwargs."""
-        executor = LocalExecutor(logger=tests.logger, timeout=30, cwd="/tmp")
+        executor = LocalExecutor(logger=testing.logger, timeout=30, cwd="/tmp")
         assert executor._exec_kwargs["timeout"] == 30
         assert executor._exec_kwargs["cwd"] == "/tmp"
 
     def test_init_overrides_default_kwargs(self):
         """Test that custom kwargs override defaults."""
-        executor = LocalExecutor(logger=tests.logger, capture_output=False, shell=True)
+        executor = LocalExecutor(logger=testing.logger, capture_output=False, shell=True)
         assert executor._exec_kwargs["capture_output"] is False
         assert executor._exec_kwargs["shell"] is True
 
@@ -370,7 +370,7 @@ class TestLocalExecutorKwargs:
 
     def test_kwargs_passed_to_subprocess(self, monkeypatch):
         """Test that execution kwargs are passed to subprocess.run."""
-        executor = LocalExecutor(logger=tests.logger, shell=True, timeout=60)
+        executor = LocalExecutor(logger=testing.logger, shell=True, timeout=60)
 
         cmd = Command()
         cmd.execution_call = "echo"
