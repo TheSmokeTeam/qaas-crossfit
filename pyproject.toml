@@ -12,5 +12,4 @@ requires-python = ">=3.12"
 [tool.setuptools-scm]
 
 [tool.setuptools.packages.find]
-include = ["crossfit*"]
-exclude = ["testing*"]
+include = ["crossfit*", "testing*"]
