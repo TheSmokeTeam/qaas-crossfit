@@ -66,8 +66,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run unit testing
-        run: pytest testing/command_tests testing/tools_tests testing/executors_tests -v --tb=short
+      - name: Run unit tests
+        run: pytest testing/unit-tests -v --tb=short
 
   publish:
     name: Build & Publish to GitHub Packages
