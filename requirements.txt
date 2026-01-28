@@ -9,10 +9,8 @@ typing-inspection~=0.4.1
 typing_extensions~=4.14.1
 
 # Test dependencies
-pytest~=8.4.1
+pytest>=8.4.3
 
-# Development dependencies
-ruff>=0.4.0
-mypy>=1.10.0
+# Build dependencies
 build>=1.2.0
 twine>=5.0.0
