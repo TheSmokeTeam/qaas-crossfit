@@ -123,7 +123,7 @@ class TestExecuteChain:
             CommandResult(code=0, command="cmd3", output="out3", error=""),
         ]
         executor = ConcreteExecutor(logger=testing.logger, results=results)
-        result = executor.execute(cmd1)
+        executor.execute(cmd1)
 
         # All 3 commands should be executed
         assert len(executor._executed_commands) == 3
@@ -208,7 +208,7 @@ class TestExecuteEdgeCases:
             CommandResult(code=0, command="second cmd", output="second", error=""),
         ]
         executor = ConcreteExecutor(logger=testing.logger, results=results)
-        result = executor.execute(cmd1)
+        executor.execute(cmd1)
 
         assert len(executor._executed_commands) == 2
 

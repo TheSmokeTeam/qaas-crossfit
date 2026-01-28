@@ -20,7 +20,8 @@ class DotnetCoverage(Tool):
         """
         target_path = Path(target_dir) / (
             target_file if target_file is not None else self._get_default_target_filename())
-        if not target_path.suffix: target_path = target_path.with_suffix(".xml")
+        if not target_path.suffix:
+            target_path = target_path.with_suffix(".xml")
         extras += ("--output", str(target_path)),
         command_builder = self._create_command_builder(
             "snapshot", None, None, *extras).add_arguments(session)
@@ -59,7 +60,8 @@ class DotnetCoverage(Tool):
         :return: A Command object configured to generate the coverage report.
         """
         multiple_values_delimiter = ';'
-        if sourcecode_dir: extras += ("-sourcedirs", str(sourcecode_dir)),
+        if sourcecode_dir:
+            extras += ("-sourcedirs", str(sourcecode_dir)),
         extras += ("-targetdir", str(target_dir)),
         command_builder = (
             self._create_command_builder("", ToolType.DotnetReportGenerator, None, *extras)

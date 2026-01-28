@@ -358,7 +358,7 @@ class TestLocalExecutorChaining:
             return subprocess.CompletedProcess(cmd, returncode=0, stdout=f"output{call_count['count']}", stderr="")
 
         monkeypatch.setattr(subprocess, "run", mock_run)
-        result = executor.execute(cmd1)
+        executor.execute(cmd1)
 
         # Due to bitwise AND in CommandResult.__add__, all commands are executed
         # because 0 & 1 = 0, so result.code stays 0 after second command

@@ -33,7 +33,8 @@ class Jacoco(Tool):
                 msg = (f"Encountered error while building {tool_type.name} command. "
                        f"JaCoCo flag option {required_flag} is required for command '{command}'.")
                 self._logger.error(msg)
-                if not self._catch: raise ValueError(msg)
+                if not self._catch:
+                    raise ValueError(msg)
                 command_builder.set_command_body(["--help"])
 
         return command_builder
@@ -51,8 +52,10 @@ class Jacoco(Tool):
         :param extras: Extra options to pass to the JaCoCo CLI's report command.
         :return: A Command object configured to generate the coverage report.
         """
-        if sourcecode_dir: extras += ("--sourcefiles", str(sourcecode_dir)),
-        if build_dir: extras += ("--classfiles", str(build_dir)),
+        if sourcecode_dir:
+            extras += ("--sourcefiles", str(sourcecode_dir)),
+        if build_dir:
+            extras += ("--classfiles", str(build_dir)),
         command = self._create_command_builder(
             "report", None, coverage_files, ["--classfiles"], *extras)
         report_formats = set((report_formats or []) + [report_format])
@@ -76,7 +79,8 @@ class Jacoco(Tool):
         """
         target_path = Path(target_dir) / (
             target_file if target_file is not None else self._get_default_target_filename())
-        if not target_path.suffix: target_path = target_path.with_suffix(".exec")
+        if not target_path.suffix:
+            target_path = target_path.with_suffix(".exec")
         extras += ("--destfile", str(target_path)),
         command = self._create_command_builder(
             "dump", None, None, None, *extras)
@@ -93,7 +97,8 @@ class Jacoco(Tool):
         """
         target_path = Path(target_dir) / (
             target_file if target_file is not None else self._get_default_target_filename())
-        if not target_path.suffix: target_path = target_path.with_suffix(".exec")
+        if not target_path.suffix:
+            target_path = target_path.with_suffix(".exec")
         extras += ("--destfile", str(target_path)),
         command = self._create_command_builder(
             "merge", None, coverage_files, None,*extras)

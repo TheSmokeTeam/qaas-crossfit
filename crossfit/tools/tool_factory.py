@@ -10,7 +10,8 @@ from crossfit.models import ToolType
 
 def create_tool(tool_type: ToolType, tool_path: str = None, cwd: Union[str, os.PathLike] = None, logger: Logger = None,
                 catch: bool = True, **kwargs):
-    if cwd: kwargs["cwd"] = cwd
+    if cwd:
+        kwargs["cwd"] = cwd
     if tool_type == ToolType.Jacoco:
         return Jacoco(logger, Path(tool_path) or Path(crossfit.refs.tools_dir), catch)
     elif tool_type == ToolType.DotnetCoverage:
