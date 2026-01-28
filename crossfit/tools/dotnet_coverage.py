@@ -36,8 +36,9 @@ class DotnetCoverage(Tool):
         :param extras: Extra options to pass to the dotnet-coverage CLI's merge command.
         :return: A Command object configured to merge coverage files.
         """
-        extras += ("--output", str((Path(target_dir) / (target_file if target_file is not None
-                                 else Path(self._get_default_target_filename()).with_suffix(".xml")))))
+        extras += ("--output", str(Path(target_dir) / (
+            target_file if target_file is not None else Path(self._get_default_target_filename()).with_suffix(
+                ".xml")))),
         command_builder = self._create_command_builder("merge", None, coverage_files, *extras)
         if {"--output-format", "-f"}.intersection(command_builder.build_command().command):
             command_builder = command_builder.add_option("--output-format", ReportFormat.Cobertura.value.lower())

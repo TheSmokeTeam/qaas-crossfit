@@ -10,7 +10,7 @@ from crossfit.models.tool_models import ToolType
 
 class Tool(ABC):
     """Abstract base class for coverage tools. Tools build and return Commands."""
-    _tool_type: Optional[ToolType] = None
+    _tool_type: ToolType
     _path: Optional[Path]
     _logger: logging.Logger
     _catch: bool
