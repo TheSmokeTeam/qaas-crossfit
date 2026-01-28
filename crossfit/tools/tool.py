@@ -2,7 +2,7 @@ import tempfile
 import logging
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Collection, Optional, Tuple, List
+from typing import Collection, Optional, Tuple, List, Union
 from crossfit.commands.command import Command
 from crossfit.commands.command_builder import CommandBuilder
 from crossfit.models.tool_models import ToolType
@@ -54,7 +54,7 @@ class Tool(ABC):
             return command_builder.set_command_body(["--help"])
 
     @abstractmethod
-    def save_report(self, coverage_files: List[Path], target_dir: Path, report_format, report_formats,
+    def save_report(self, coverage_files: List[Union[Path, str]], target_dir: Path, report_format, report_formats,
                     sourcecode_dir: Optional[Path], build_dir: Optional[Path],
                     *extras: Tuple[str, Optional[str]]) -> Command:
         """Builds a command to create a coverage report."""
@@ -67,7 +67,7 @@ class Tool(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def merge_coverage(self, coverage_files: List[Path], target_dir: Path, target_file: Optional[Path],
+    def merge_coverage(self, coverage_files: List[Union[Path, str]], target_dir: Path, target_file: Optional[Path],
                        *extras: Tuple[str, Optional[str]]) -> Command:
         """Builds a command to merge coverage files."""
         raise NotImplementedError
