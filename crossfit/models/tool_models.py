@@ -2,9 +2,9 @@ from enum import Enum
 
 
 class ToolType(Enum):
-    Jacoco: str = "jacococli.jar"
-    DotnetCoverage: str = "dotnet-coverage"
-    DotnetReportGenerator: str = "reportgenerator"
+    Jacoco = "jacococli.jar"
+    DotnetCoverage = "dotnet-coverage"
+    DotnetReportGenerator = "reportgenerator"
 
 
 class ReportFormat(Enum):
