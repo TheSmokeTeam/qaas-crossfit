@@ -1,3 +1,4 @@
 import crossfit.refs
 from crossfit.commands.command import Command
 from crossfit.tools import Tool, Jacoco, DotnetCoverage, create_tool
+from crossfit.executors import Executor, LocalExecutor, create_executor
