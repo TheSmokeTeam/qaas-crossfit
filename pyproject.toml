@@ -9,7 +9,7 @@ description = "A unified interface for various code coverage tools (JaCoCo, dotn
 readme = "README.md"
 requires-python = ">=3.12"
 
-[tool.setuptools-scm]
+[tool.setuptools_scm]
 
 [tool.setuptools.packages.find]
 include = ["crossfit*"]
