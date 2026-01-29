@@ -5,7 +5,6 @@ from typing import List, Optional, Tuple
 
 import pytest
 
-import testing
 from crossfit.commands.command import Command
 from crossfit.commands.command_builder import CommandBuilder
 from crossfit.models.tool_models import ToolType
@@ -34,43 +33,43 @@ class ConcreteTool(Tool):
 
 
 @pytest.fixture
-def tool():
+def tool(logger):
     """Fixture for a tool with catch=True (default)."""
-    return ConcreteTool(logger=testing.logger, path=Path("./tools"), catch=True)
+    return ConcreteTool(logger=logger, path=Path("./tools"), catch=True)
 
 
 @pytest.fixture
-def tool_no_catch():
+def tool_no_catch(logger):
     """Fixture for a tool with catch=False."""
-    return ConcreteTool(logger=testing.logger, path=Path("./tools"), catch=False)
+    return ConcreteTool(logger=logger, path=Path("./tools"), catch=False)
 
 
 @pytest.fixture
-def tool_no_path():
+def tool_no_path(logger):
     """Fixture for a tool without a custom path."""
-    return ConcreteTool(logger=testing.logger, path=None, catch=True)
+    return ConcreteTool(logger=logger, path=None, catch=True)
 
 
 class TestToolInit:
     """Tests for Tool initialization."""
 
-    def test_tool_init_with_all_params(self):
+    def test_tool_init_with_all_params(self, logger):
         """Test Tool initialization with all parameters."""
-        tool = ConcreteTool(logger=testing.logger, path=Path("/custom/path"), catch=False)
-        assert tool._logger == testing.logger
+        tool = ConcreteTool(logger=logger, path=Path("/custom/path"), catch=False)
+        assert tool._logger == logger
         assert tool._path == Path("/custom/path")
         assert tool._catch is False
 
-    def test_tool_init_with_defaults(self):
+    def test_tool_init_with_defaults(self, logger):
         """Test Tool initialization with default values."""
-        tool = ConcreteTool(logger=testing.logger)
-        assert tool._logger == testing.logger
+        tool = ConcreteTool(logger=logger)
+        assert tool._logger == logger
         assert tool._path is None
         assert tool._catch is True
 
-    def test_tool_type_is_set(self):
+    def test_tool_type_is_set(self, logger):
         """Test that tool type is correctly set on the concrete tool."""
-        tool = ConcreteTool(logger=testing.logger)
+        tool = ConcreteTool(logger=logger)
         assert tool._tool_type == ToolType.Jacoco
 
 

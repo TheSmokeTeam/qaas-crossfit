@@ -1,7 +1,6 @@
 # test_executor.py
 import pytest
 
-import testing
 from crossfit.commands.command import Command
 from crossfit.executors.executor import Executor
 from crossfit.models.command_models import CommandResult
@@ -77,33 +76,33 @@ def chained_commands():
 class TestExecutorInit:
     """Tests for Executor initialization."""
 
-    def test_executor_init_with_defaults(self):
+    def test_executor_init_with_defaults(self, logger):
         """Test Executor initialization with default catch=True."""
-        executor = ConcreteExecutor(logger=testing.logger)
-        assert executor._logger == testing.logger
+        executor = ConcreteExecutor(logger=logger)
+        assert executor._logger == logger
         assert executor._catch is True
 
-    def test_executor_init_with_catch_false(self):
+    def test_executor_init_with_catch_false(self, logger):
         """Test Executor initialization with catch=False."""
-        executor = ConcreteExecutor(logger=testing.logger, catch=False)
+        executor = ConcreteExecutor(logger=logger, catch=False)
         assert executor._catch is False
 
 
 class TestExecuteSingle:
     """Tests for single command execution."""
 
-    def test_execute_single_command_success(self, simple_command, success_result):
+    def test_execute_single_command_success(self, simple_command, success_result, logger):
         """Test executing a single command successfully."""
-        executor = ConcreteExecutor(logger=testing.logger, results=[success_result])
+        executor = ConcreteExecutor(logger=logger, results=[success_result])
         result = executor.execute(simple_command)
 
         assert result.code == 0
         assert result.output == "success output"
         assert len(executor._executed_commands) == 1
 
-    def test_execute_single_command_failure(self, simple_command, failure_result):
+    def test_execute_single_command_failure(self, simple_command, failure_result, logger):
         """Test executing a single command that fails."""
-        executor = ConcreteExecutor(logger=testing.logger, results=[failure_result])
+        executor = ConcreteExecutor(logger=logger, results=[failure_result])
         result = executor.execute(simple_command)
 
         assert result.code == 1
@@ -114,7 +113,7 @@ class TestExecuteSingle:
 class TestExecuteChain:
     """Tests for chained command execution."""
 
-    def test_execute_chain_all_success(self, chained_commands):
+    def test_execute_chain_all_success(self, chained_commands, logger):
         """Test executing a chain of commands where all succeed."""
         cmd1, cmd2, cmd3 = chained_commands
         results = [
@@ -122,7 +121,7 @@ class TestExecuteChain:
             CommandResult(code=0, command="cmd2", output="out2", error=""),
             CommandResult(code=0, command="cmd3", output="out3", error=""),
         ]
-        executor = ConcreteExecutor(logger=testing.logger, results=results)
+        executor = ConcreteExecutor(logger=logger, results=results)
         executor.execute(cmd1)
 
         # All 3 commands should be executed
@@ -131,7 +130,7 @@ class TestExecuteChain:
         assert executor._executed_commands[1] is cmd2
         assert executor._executed_commands[2] is cmd3
 
-    def test_execute_chain_stops_on_failure(self, chained_commands):
+    def test_execute_chain_stops_on_failure(self, chained_commands, logger):
         """Test that chain stops executing when a command fails (with code != 0)."""
         cmd1, cmd2, cmd3 = chained_commands
         results = [
@@ -139,27 +138,27 @@ class TestExecuteChain:
             CommandResult(code=0, command="cmd2", output="out2", error=""),
             CommandResult(code=0, command="cmd3", output="out3", error=""),  # Should not be reached
         ]
-        executor = ConcreteExecutor(logger=testing.logger, results=results)
+        executor = ConcreteExecutor(logger=logger, results=results)
         result = executor.execute(cmd1)
 
         # Only first command should be executed because it failed
         assert len(executor._executed_commands) == 1
         assert result.code != 0  # Should reflect failure
 
-    def test_execute_chain_first_command_fails(self, chained_commands):
+    def test_execute_chain_first_command_fails(self, chained_commands, logger):
         """Test that chain stops immediately if first command fails."""
         cmd1, cmd2, cmd3 = chained_commands
         results = [
             CommandResult(code=127, command="cmd1", output="", error="cmd1 not found"),
         ]
-        executor = ConcreteExecutor(logger=testing.logger, results=results)
+        executor = ConcreteExecutor(logger=logger, results=results)
         result = executor.execute(cmd1)
 
         # Only first command should be executed
         assert len(executor._executed_commands) == 1
         assert result.code == 127
 
-    def test_execute_chain_aggregates_results(self, chained_commands):
+    def test_execute_chain_aggregates_results(self, chained_commands, logger):
         """Test that results are properly aggregated across the chain."""
         cmd1, cmd2, cmd3 = chained_commands
         results = [
@@ -167,7 +166,7 @@ class TestExecuteChain:
             CommandResult(code=0, command="cmd2 arg2", output="out2", error=""),
             CommandResult(code=0, command="cmd3 arg3", output="out3", error=""),
         ]
-        executor = ConcreteExecutor(logger=testing.logger, results=results)
+        executor = ConcreteExecutor(logger=logger, results=results)
         result = executor.execute(cmd1)
 
         # Check aggregated command string
@@ -183,15 +182,15 @@ class TestExecuteChain:
 class TestExecuteEdgeCases:
     """Tests for edge cases in command execution."""
 
-    def test_execute_command_without_next_command(self, simple_command, success_result):
+    def test_execute_command_without_next_command(self, simple_command, success_result, logger):
         """Test executing a command that has no next_command."""
-        executor = ConcreteExecutor(logger=testing.logger, results=[success_result])
+        executor = ConcreteExecutor(logger=logger, results=[success_result])
         result = executor.execute(simple_command)
 
         assert len(executor._executed_commands) == 1
         assert result.code == 0
 
-    def test_execute_two_command_chain(self):
+    def test_execute_two_command_chain(self, logger):
         """Test executing a chain of exactly 2 commands."""
         cmd1 = Command()
         cmd1.execution_call = "first"
@@ -207,12 +206,12 @@ class TestExecuteEdgeCases:
             CommandResult(code=0, command="first cmd", output="first", error=""),
             CommandResult(code=0, command="second cmd", output="second", error=""),
         ]
-        executor = ConcreteExecutor(logger=testing.logger, results=results)
+        executor = ConcreteExecutor(logger=logger, results=results)
         executor.execute(cmd1)
 
         assert len(executor._executed_commands) == 2
 
-    def test_execute_with_non_zero_code_stops_chain(self):
+    def test_execute_with_non_zero_code_stops_chain(self, logger):
         """Test that any non-zero return code stops the chain."""
         cmd1 = Command()
         cmd1.execution_call = "cmd1"
@@ -226,7 +225,7 @@ class TestExecuteEdgeCases:
         results = [
             CommandResult(code=255, command="cmd1", output="", error="custom error"),
         ]
-        executor = ConcreteExecutor(logger=testing.logger, results=results)
+        executor = ConcreteExecutor(logger=logger, results=results)
         result = executor.execute(cmd1)
 
         assert len(executor._executed_commands) == 1
