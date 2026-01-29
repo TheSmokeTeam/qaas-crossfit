@@ -4,32 +4,31 @@ import crossfit
 from crossfit import DotnetCoverage, Command
 from crossfit.executors import LocalExecutor
 from crossfit.models import CommandResult, ReportFormat
-from testing import logger, tests_dir_path
 
 
 @pytest.fixture
-def dotnetcoverage_tool():
+def dotnetcoverage_tool(logger):
     return DotnetCoverage(logger, crossfit.refs.tools_dir, True)
 
 
 @pytest.fixture
-def local_executor():
+def local_executor(logger):
     return LocalExecutor(logger, False, **{"check": True})
 
 
 @pytest.fixture
-def coverage_files():
+def coverage_files(tests_dir_path):
     return [Path(tests_dir_path / r"helpers/tools/dotnetcoverage/s1.cobertura.xml"),
             Path(tests_dir_path / r"helpers/tools/dotnetcoverage/s2.cobertura.xml")]
 
 
 @pytest.fixture
-def target_dir():
+def target_dir(tests_dir_path):
     return Path(tests_dir_path / r"helpers/tools/dotnetcoverage/output/")
 
 
 @pytest.fixture
-def sourcecode_dir():
+def sourcecode_dir(tests_dir_path):
     return Path(tests_dir_path / r"helpers/tools/dotnetcoverage/sourcecode/")
 
 

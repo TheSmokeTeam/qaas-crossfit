@@ -4,7 +4,6 @@ from pathlib import Path
 import pytest
 
 from crossfit import Command
-from testing import tests_dir_path
 
 
 class TestCommand:
@@ -74,12 +73,12 @@ class TestCommand:
     # endregion
 
     # region Path Validation Tests
-    def test_validate_path_with_valid_file(self):
+    def test_validate_path_with_valid_file(self, tests_dir_path):
         """Test validate_path with an existing file."""
         valid_path = tests_dir_path / "helpers/command/f1.txt"
         Command.validate_path(valid_path)  # Should not raise
 
-    def test_validate_path_with_valid_directory(self):
+    def test_validate_path_with_valid_directory(self, tests_dir_path):
         """Test validate_path with an existing directory."""
         valid_path = tests_dir_path / "helpers/command/"
         Command.validate_path(valid_path)  # Should not raise
@@ -90,7 +89,7 @@ class TestCommand:
         with pytest.raises(FileNotFoundError):
             Command.validate_path(invalid_path)
 
-    def test_validate_path_with_glob_pattern(self):
+    def test_validate_path_with_glob_pattern(self, tests_dir_path):
         """Test validate_path with glob pattern."""
         glob_path = tests_dir_path / "helpers/command/*.txt"
         Command.validate_path(glob_path)  # Should not raise

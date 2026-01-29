@@ -7,35 +7,34 @@ import crossfit
 from crossfit import Jacoco, Command
 from crossfit.executors import LocalExecutor
 from crossfit.models import CommandResult, ReportFormat
-from testing import logger, tests_dir_path
 
 
 @pytest.fixture
-def jacoco_tool():
+def jacoco_tool(logger):
     return Jacoco(logger, crossfit.refs.tools_dir, True)
 
 @pytest.fixture
-def local_executor():
+def local_executor(logger):
     return LocalExecutor(logger, False, **{"check": True})
 
 @pytest.fixture
-def coverage_files():
+def coverage_files(tests_dir_path):
     return [Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/f1.exec"))),
             Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/f2.exec")))]
 
 
 @pytest.fixture
-def target_dir():
+def target_dir(tests_dir_path):
     return Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/output/")))
 
 
 @pytest.fixture
-def sourcecode_dir():
+def sourcecode_dir(tests_dir_path):
     return Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/sourcecode/")))
 
 
 @pytest.fixture
-def classfiles_dir():
+def classfiles_dir(tests_dir_path):
     return Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/classfiles/")))
 
 

@@ -1,12 +1,9 @@
 import os.path
 from pathlib import Path
-
 import pytest
 from typeguard import TypeCheckError
-
 from crossfit import Command
 from crossfit.commands.command_builder import CommandBuilder
-from testing import tests_dir_path
 
 
 class TestCommandBuilder:
@@ -142,7 +139,7 @@ class TestCommandBuilder:
     # endregion
 
     # region add_path_arguments Tests
-    def test_add_path_arguments(self):
+    def test_add_path_arguments(self, tests_dir_path):
         """Test adding path arguments."""
         expected_command = ["python", "run.py", os.path.relpath(tests_dir_path / r"helpers/command/f1.txt"),
                             os.path.relpath(tests_dir_path / r"helpers/command/")]
@@ -151,7 +148,7 @@ class TestCommandBuilder:
         command = command_builder.build_command()
         assert command.command == expected_command
 
-    def test_add_path_arguments_with_absolute_paths(self):
+    def test_add_path_arguments_with_absolute_paths(self, tests_dir_path):
         """Test adding absolute path arguments."""
         command_builder = CommandBuilder().with_command(["python", "run.py"]).add_path_arguments(
             tests_dir_path / "helpers/command/", tests_dir_path / "helpers/command/f1.txt")
