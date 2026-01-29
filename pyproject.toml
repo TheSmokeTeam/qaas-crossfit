@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "setuptools-scm>=8.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "smoke-crossfit"
+name = "SmokeCrossFit"
 dynamic = ["version"]
 description = "A unified interface for various code coverage tools (JaCoCo, dotnet-coverage)"
 readme = "README.md"
@@ -13,4 +13,3 @@ requires-python = ">=3.12"
 
 [tool.setuptools.packages.find]
 include = ["crossfit*"]
-exclude = ["testing*"]
