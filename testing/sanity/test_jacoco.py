@@ -68,7 +68,7 @@ def test_jacoco_execute_report(jacoco_tool, local_executor, coverage_files, targ
     assert result.code == expected_return_code
 
 
-def test_jacoco_execute_report_files_wildcard(jacoco_tool, local_executor, target_dir, sourcecode_dir, classfiles_dir):
+def test_jacoco_execute_report_files_wildcard(jacoco_tool, local_executor, target_dir, sourcecode_dir, classfiles_dir, tests_dir_path):
     report_format = ReportFormat.Csv
     coverage_files = [Path(tests_dir_path / r"helpers/tools/jacoco/*.exec")]
     report_formats = [ReportFormat.Html, ReportFormat.Xml]
