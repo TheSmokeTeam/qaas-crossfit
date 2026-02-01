@@ -1,9 +1,10 @@
 import subprocess
 from logging import Logger
 import shlex
-from crossfit.commands.command import Command
-from crossfit.executors.executor import Executor
-from crossfit.models.command_models import CommandResult
+
+from crossfit import Command
+from crossfit import Executor
+from crossfit.models import CommandResult
 
 
 class LocalExecutor(Executor):

@@ -1,5 +1,5 @@
-from crossfit.models.executor_models import ExecutorType
-from crossfit.executors.local_executor import LocalExecutor
+from crossfit.models import ExecutorType
+from crossfit import LocalExecutor
 
 def create_executor(executor_type: ExecutorType, logger = None, catch: bool = True, **kwargs):
     if executor_type == ExecutorType.Local:
