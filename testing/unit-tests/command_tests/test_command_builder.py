@@ -1,8 +1,9 @@
 import os.path
-from pathlib import Path
 import pytest
+
+from pathlib import Path
 from typeguard import TypeCheckError
-from crossfit import Command
+from crossfit.commands.command import Command
 from crossfit.commands.command_builder import CommandBuilder
 
 

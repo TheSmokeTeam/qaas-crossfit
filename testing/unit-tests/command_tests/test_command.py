@@ -1,9 +1,8 @@
 import copy
-from pathlib import Path
-
 import pytest
 
-from crossfit import Command
+from pathlib import Path
+from crossfit.commands.command import Command
 
 
 class TestCommand:

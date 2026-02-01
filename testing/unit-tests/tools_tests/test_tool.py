@@ -1,9 +1,9 @@
 # test_tool.py
 import tempfile
+import pytest
+
 from pathlib import Path
 from typing import List, Optional, Tuple
-
-import pytest
 
 from crossfit.commands.command import Command
 from crossfit.commands.command_builder import CommandBuilder

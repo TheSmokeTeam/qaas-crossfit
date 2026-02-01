@@ -2,18 +2,12 @@ from pathlib import Path
 import pytest
 import crossfit
 from crossfit import DotnetCoverage, Command
-from crossfit.executors import LocalExecutor
 from crossfit.models import CommandResult, ReportFormat
 
 
 @pytest.fixture
 def dotnetcoverage_tool(logger):
     return DotnetCoverage(logger, crossfit.refs.tools_dir, True)
-
-
-@pytest.fixture
-def local_executor(logger):
-    return LocalExecutor(logger, False, **{"check": True})
 
 
 @pytest.fixture

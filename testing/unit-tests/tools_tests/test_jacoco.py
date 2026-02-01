@@ -3,18 +3,12 @@ from pathlib import Path
 import pytest
 import crossfit
 from crossfit import Jacoco, Command
-from crossfit.executors.local_executor import LocalExecutor
 from crossfit.models import CommandResult, ReportFormat
 
 
 @pytest.fixture
 def jacoco_tool(logger):
     return Jacoco(logger, crossfit.refs.tools_dir, True)
-
-
-@pytest.fixture
-def local_executor(logger):
-    return LocalExecutor(logger, False, **{"check": True})
 
 
 @pytest.fixture

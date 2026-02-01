@@ -1,8 +1,10 @@
 import logging
 import sys
-from pathlib import Path
-
 import pytest
+
+from pathlib import Path
+from crossfit import LocalExecutor
+
 
 @pytest.fixture(scope="session")
 def tests_dir_path() -> Path:
@@ -17,3 +19,7 @@ def logger() -> logging.Logger:
         lg.addHandler(handler)
     lg.setLevel(logging.DEBUG)
     return lg
+
+@pytest.fixture
+def local_executor(logger):
+    return LocalExecutor(logger, False, **{"check": True})
