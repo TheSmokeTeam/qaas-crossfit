@@ -54,9 +54,9 @@ def test_jacoco_execute_report(jacoco_tool, local_executor, coverage_files, targ
     command = jacoco_tool.save_report(
         coverage_files,
         target_dir,
+        sourcecode_dir,
         report_format,
         report_formats,
-        sourcecode_dir,
         classfiles_dir,
         *extras
     )
@@ -77,9 +77,9 @@ def test_jacoco_execute_report_files_wildcard(jacoco_tool, local_executor, targe
     command = jacoco_tool.save_report(
         coverage_files,
         target_dir,
+        sourcecode_dir,
         report_format,
         report_formats,
-        sourcecode_dir,
         classfiles_dir,
         *extras
     )
