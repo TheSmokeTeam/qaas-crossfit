@@ -61,9 +61,9 @@ def test_jacoco_execute_report(
     command = jacoco_tool.save_report(
         coverage_files,
         target_dir,
+        sourcecode_dir,
         report_format,
         report_formats,
-        sourcecode_dir,
         classfiles_dir,
     )
     assert isinstance(command, Command)
