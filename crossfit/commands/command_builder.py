@@ -1,10 +1,11 @@
 import copy
 import glob
 import os.path
+
 from pathlib import Path
-from typing import List, Optional, Self, Tuple
+from typing import Optional, Self
 from typeguard import typechecked
-from crossfit.commands.command import Command
+from crossfit import Command
 
 
 class CommandBuilder:
@@ -26,7 +27,7 @@ class CommandBuilder:
         self._command.next_command = command
 
     @typechecked()
-    def with_command(self, command: List[str]) -> Self:
+    def with_command(self, command: list[str]) -> Self:
         """
         Initializes the command from a list of strings.
         :param command: A list containing at least two strings - execution call and command to execute
@@ -49,7 +50,7 @@ class CommandBuilder:
         :param path: Optional path to prepend to the execution call
         :returns: Self for method chaining
         """
-        self._command.execution_call = execution_call if path is None else os.path.relpath(path / execution_call)
+        self._command.execution_call = execution_call if path is None else str(os.path.relpath(path / execution_call))
         return self
 
     @typechecked()
@@ -63,7 +64,7 @@ class CommandBuilder:
         return self
 
     @typechecked()
-    def set_command_body(self, command_body: List[str]) -> Self:
+    def set_command_body(self, command_body: list[str]) -> Self:
         """
         Sets the command body containing arguments and options.
         :param command_body: A list of strings representing the command body
@@ -99,7 +100,7 @@ class CommandBuilder:
         return self
 
     @typechecked()
-    def add_options(self, *args: Tuple[str, Optional[str]]) -> Self:
+    def add_options(self, *args: tuple[str, Optional[str]]) -> Self:
         """
         Adds multiple options to the command.
         :param args: Variable number of tuples, each containing (option, value) pairs

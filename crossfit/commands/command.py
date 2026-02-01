@@ -1,7 +1,7 @@
 import copy
 import glob
 from pathlib import Path
-from typing import Optional, List, Tuple, Self
+from typing import Optional, Self
 from typeguard import typechecked
 
 COMMAND_DELIMITER = " "
@@ -11,9 +11,9 @@ class Command:
     next_command: Optional[Self]
     execution_call: Optional[str]
     command_to_execute: Optional[str]
-    command_body: List[str]
-    options: List[Tuple[str, Optional[str]]]
-    arguments: List[str]
+    command_body: list[str]
+    options: list[tuple[str, Optional[str]]]
+    arguments: list[str]
     values_delimiter: Optional[str]
 
     @typechecked()
@@ -30,14 +30,14 @@ class Command:
         self.values_delimiter = None
 
     @property
-    def command(self) -> List[str]:
+    def command(self) -> list[str]:
         """
         :returns: The command itself as a list of strings
         """
         return list(filter(lambda s: s is not None, [self.execution_call, self.command_to_execute, *self.command_body]))
 
     @command.setter
-    def command(self, value: List[str]):
+    def command(self, value: list[str]):
         """
         Sets the command body from a list of strings
         :param value: The command body as list of strings
