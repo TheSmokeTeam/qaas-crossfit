@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from logging import Logger
 
-from crossfit import Command
-from crossfit.models import CommandResult
+from crossfit.commands.command import Command
+from crossfit.models.command_models import CommandResult
 
 
 class Executor(ABC):

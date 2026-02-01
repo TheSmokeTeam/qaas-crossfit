@@ -5,7 +5,7 @@ import os.path
 from pathlib import Path
 from typing import Optional, Self
 from typeguard import typechecked
-from crossfit import Command
+from crossfit.commands.command import Command
 
 
 class CommandBuilder:
