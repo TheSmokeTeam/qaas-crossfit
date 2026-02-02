@@ -7,7 +7,7 @@ from typing import List, Optional, Tuple
 
 from crossfit.commands.command import Command
 from crossfit.commands.command_builder import CommandBuilder
-from crossfit.models.tool_models import ToolType
+from crossfit.models.tool_models import ToolType, ReportFormat
 from crossfit.tools.tool import Tool
 
 
@@ -18,9 +18,9 @@ class ConcreteTool(Tool):
     def __init__(self, logger, path: Optional[Path] = None, catch: bool = True):
         super().__init__(logger, path, catch)
 
-    def save_report(self, coverage_files: List[Path], target_dir: Path, report_format, report_formats,
-                    sourcecode_dir: Optional[Path], build_dir: Optional[Path],
-                    *extras: Tuple[str, Optional[str]]) -> Command:
+    def save_report(self, coverage_files: list[Path], target_dir: Path, sourcecode_dir: Optional[Path] = None,
+                    report_format: ReportFormat = None, report_formats: list[ReportFormat] = None,
+                    *extras: tuple[str, Optional[str]]) -> Command:
         return self._create_command_builder("report", None, coverage_files, *extras).build_command()
 
     def snapshot_coverage(self, session: str, target_dir: Path, target_file: Optional[str],
@@ -189,7 +189,7 @@ class TestToolAbstractMethods:
 
     def test_save_report_returns_command(self, tool):
         """Test that save_report returns a Command."""
-        command = tool.save_report([], Path("/output"), None, None, None, None)
+        command = tool.save_report([], Path("/output"), None, None, None)
         assert isinstance(command, Command)
 
     def test_snapshot_coverage_returns_command(self, tool):
