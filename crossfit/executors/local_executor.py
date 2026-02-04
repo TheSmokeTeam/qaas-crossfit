@@ -1,6 +1,7 @@
 import subprocess
 from logging import Logger
 import shlex
+from pathlib import Path
 
 from crossfit.commands.command import Command
 from crossfit.executors.executor import Executor
@@ -10,20 +11,25 @@ from crossfit.models.command_models import CommandResult
 class LocalExecutor(Executor):
     """Executor that runs commands locally via subprocess."""
 
-    def __init__(self, logger: Logger, catch: bool = True, **execution_kwargs):
+    def __init__(self, logger: Logger, catch: bool = True, workdir: Path = None, **execution_kwargs):
         """
         :param logger: Logger instance for logging execution details (required)
         :param catch: If True, catches exceptions and returns error in CommandResult.
                       If False, re-raises exceptions.
         :param execution_kwargs: Additional arguments passed to subprocess.run
         """
+        self._workdir = workdir
+        if workdir is not None:
+            execution_kwargs["cwd"] = str(workdir)
+
         super().__init__(logger, catch)
+
         self._exec_kwargs = {
             "capture_output": True,
             "check": True,
             "text": True,
+            **execution_kwargs,
         }
-        self._exec_kwargs.update(execution_kwargs)
 
     def _execute_single(self, command: Command) -> CommandResult:
         """

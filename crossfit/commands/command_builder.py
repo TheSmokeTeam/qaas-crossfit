@@ -84,7 +84,7 @@ class CommandBuilder:
         if self._command.values_delimiter != delimiter:
             self._command.values_delimiter = delimiter
             if update_current_values:
-                self.__update_all_options()
+                self._update_all_options()
         return self
 
     @typechecked()
@@ -145,12 +145,12 @@ class CommandBuilder:
         """
         return copy.copy(self._command)
 
-    def __update_all_options(self) -> Self:
+    def _update_all_options(self) -> Self:
         """
         Updates all existing options with the current delimiter.
         :returns: Self for method chaining
         """
-        self._command.command_body = self._command.command_body[:-sum(len(option) for option in self._command.options)]
+        self._command.command_body = self._command.arguments
         options = self._command.options.copy()
         self._command.options = []
         self.add_options(*options)
