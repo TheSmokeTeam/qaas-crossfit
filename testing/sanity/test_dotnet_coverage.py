@@ -100,7 +100,9 @@ def coverage_files(tests_dir_path):
 
 @pytest.fixture
 def target_dir(tests_dir_path):
-    return Path(tests_dir_path / r"helpers/tools/dotnetcoverage/output/")
+    target = Path(tests_dir_path / r"helpers/tools/dotnetcoverage/output/")
+    target.mkdir(parents=True, exist_ok=True)
+    return target
 
 
 @pytest.fixture

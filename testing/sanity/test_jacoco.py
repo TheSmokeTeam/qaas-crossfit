@@ -25,7 +25,9 @@ def coverage_files(tests_dir_path):
 
 @pytest.fixture
 def target_dir(tests_dir_path):
-    return Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/output/")))
+    target = Path(str(os.path.relpath(tests_dir_path / r"helpers/tools/jacoco/output/")))
+    target.mkdir(parents=True, exist_ok=True)
+    return target
 
 
 @pytest.fixture
